@@ -26,6 +26,15 @@ export const Registration: React.FC = () => {
     event.preventDefault();
     if (userData.username === '') {
       console.log('empty username');
+      const atIndex = userData.email.indexOf("@");
+
+      if (atIndex !== -1) {
+        const username = userData.email.substring(0, atIndex);
+        setUserData({ ...userData, username: username });
+        console.log('username', username);
+      } else {
+        console.log("Znak '@' nebyl nalezen.");
+      }
     }
 
     console.log(userData);
@@ -40,7 +49,9 @@ export const Registration: React.FC = () => {
   return (
     <form className="form">
       <div className="form__header">
-        <FaUser className="icon-user" />
+        <div className="form__header--inner">
+          <FaUser className="icon-user" />
+        </div>
       </div>
       <div className="form__body">
         <input className="form__input" type="text" name="email" value={userData.email} onChange={handleChange} placeholder="Email Address"></input>

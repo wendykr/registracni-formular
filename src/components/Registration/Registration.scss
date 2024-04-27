@@ -1,6 +1,6 @@
 .form {
   margin-top: 40px;
-  padding: 140px 40px 40px 40px;
+  padding: 160px 40px 40px 40px;
   width: 450px;
   background-color: #ffffff;
   border-radius: 20px;
@@ -11,13 +11,26 @@
   align-items: center;
 
   &__header {
-    padding: 40px;
-    background: linear-gradient(to bottom left, #FFFFFF, #a4a5ab);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
-    // border: 10px solid black;
+    background: linear-gradient(201deg, rgba(164, 165, 171, 1) 0%, rgba(255, 255, 255, 1) 51%, rgba(164, 165, 171, 1) 100%);;
     position: absolute;
     top: -30px;
-    left: calc(50% - 55px);
+    left: calc(50% - 75px);
+
+    &--inner {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 89% 18%, rgba(255, 255, 255, 1) 12%, rgba(164, 165, 171, 1) 63%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   &__body {
@@ -52,7 +65,7 @@
 }
 
 .icon-user {
-  font-size: 50px;
+  font-size: 60px;
   color: #344559;
 }
 
