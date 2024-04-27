@@ -40,6 +40,9 @@
     &:focus {
       outline: none;
       background-color: #435161;
+      &::placeholder {
+        color: #435161;
+      }
     }
 
     &::placeholder {
