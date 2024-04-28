@@ -38,12 +38,12 @@ export const Registration: React.FC = () => {
     }
 
     console.log(userData);
-    setUserData({
-      username: '',
-      email: '',
-      password: '',
-      passwordConfirm: '',
-    })
+    // setUserData({
+    //   username: '',
+    //   email: '',
+    //   password: '',
+    //   passwordConfirm: '',
+    // })
   }
 
   return (
