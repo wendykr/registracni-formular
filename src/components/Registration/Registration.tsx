@@ -30,20 +30,22 @@ export const Registration: React.FC = () => {
 
       if (atIndex !== -1) {
         const username = userData.email.substring(0, atIndex);
-        setUserData({ ...userData, username: username });
-        console.log('username', username);
+        const newUserData = { ...userData, username: username };
+        console.log(newUserData);
       } else {
         console.log("Znak '@' nebyl nalezen.");
+        return;
       }
+    } else {
+      console.log(userData);
     }
 
-    console.log(userData);
-    // setUserData({
-    //   username: '',
-    //   email: '',
-    //   password: '',
-    //   passwordConfirm: '',
-    // })
+    setUserData({
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirm: '',
+    })
   }
 
   return (
