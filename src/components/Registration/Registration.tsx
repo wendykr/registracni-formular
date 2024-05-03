@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './Registration.scss';
-import { FaUser } from "react-icons/fa6";
+import { FaUser } from 'react-icons/fa';
 
 interface RegistrationStructure {
   username: string;
   email: string;
   password: string;
   passwordConfirm: string;
+}
+
+interface RegistrationStructureErr {
+  usernameErr: string;
+  emailErr: string;
+  passwordErr: string;
+  passwordConfirmErr: string;
 }
 
 export const Registration: React.FC = () => {
@@ -17,51 +24,79 @@ export const Registration: React.FC = () => {
     passwordConfirm: '',
   });
 
+  const [userDataErr, setUserDataErr] = useState<RegistrationStructureErr>({
+    usernameErr: '',
+    emailErr: '',
+    passwordErr: '',
+    passwordConfirmErr: '',
+  });
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const updatedUsername =
+    event.target.name === 'email' ? event.target.value.substring(0, event.target.value.indexOf('@')) : userData.username;
 
-    const updatedUsername = event.target.name === 'email' ? event.target.value.substring(0, event.target.value.indexOf('@')) : userData.username;
+    setUserData({ ...userData, username: updatedUsername, [event.target.name]: event.target.value });
 
-    if (updatedUsername.length > 0) {
-      setUserData({ ...userData, username: updatedUsername, [event.target.name]: event.target.value });
-    } else {
-      setUserData({ ...userData, [event.target.name]: event.target.value });
-      return;
-    }
+    setUserDataErr({ ...userDataErr, [`${event.target.name}Err`]: '' });
   };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-    
+
+    const newUserDataErr: RegistrationStructureErr = {
+      usernameErr: '',
+      emailErr: '',
+      passwordErr: '',
+      passwordConfirmErr: '',
+    };
+
     if (userData.username === '') {
-      console.log('empty username');
-      return;
-    } else if (userData.email === '') {
-      console.log('empty email');
-      return;
-    } else if (userData.password === '') {
-      console.log('empty password');
-      return;
-    } else if (userData.passwordConfirm === '') {
-      console.log('empty passwordConfirm');
-      return;
-    } else if (userData.password !== userData.passwordConfirm) {
-      console.log('passwords do not match');
-      return;
-    } else if (!userData.email.includes('@')) {
-      console.log('invalid email format');
-      return;
-    } else {
-      console.log(userData);
+      newUserDataErr.usernameErr = 'Username is required';
     }
 
-    console.log('set default userData');
+    if (userData.email === '') {
+      newUserDataErr.emailErr = 'Email is required';
+    } else if (!userData.email.includes('@')) {
+      newUserDataErr.emailErr = 'Invalid email format';
+    }
+
+    if (userData.password === '') {
+      newUserDataErr.passwordErr = 'Password is required';
+    }
+
+    if (userData.passwordConfirm === '') {
+      newUserDataErr.passwordConfirmErr = 'Please confirm your password';
+    } else if (userData.password !== userData.passwordConfirm) {
+      newUserDataErr.passwordConfirmErr = `Passwords don't match`;
+    }
+
+    setUserDataErr(newUserDataErr);
+
+    if (
+      newUserDataErr.usernameErr ||
+      newUserDataErr.emailErr ||
+      newUserDataErr.passwordErr ||
+      newUserDataErr.passwordConfirmErr
+    ) {
+      return;
+    }
+
+    console.log('userData:', userData);
+
     setUserData({
       username: '',
       email: '',
       password: '',
       passwordConfirm: '',
-    })
-  }
+    });
+
+    setUserDataErr({
+      usernameErr: '',
+      emailErr: '',
+      passwordErr: '',
+      passwordConfirmErr: '',
+    });
+  };
 
   return (
     <form className="form">
@@ -71,12 +106,57 @@ export const Registration: React.FC = () => {
         </div>
       </div>
       <div className="form__body">
-        <input className="form__input" type="text" name="email" value={userData.email} onChange={handleChange} placeholder="Email Address"></input>
-        <input className="form__input" type="text" name="username" value={userData.username} onChange={handleChange} placeholder="User Name"></input>
-        <input className="form__input" type="password" name="password" value={userData.password} onChange={handleChange} placeholder="Password"></input>
-        <input className="form__input" type="password" name="passwordConfirm" value={userData.passwordConfirm} onChange={handleChange} placeholder="Confirm Password"></input>
+        <div className="form__row">
+          {userDataErr.emailErr && <p className="error">{userDataErr.emailErr}</p>}
+          <input
+            className="form__input"
+            type="text"
+            name="email"
+            value={userData.email}
+            onChange={handleChange}
+            placeholder="Email Address"
+          />
+        </div>
+
+        <div className="form__row">
+          {userDataErr.usernameErr && <p className="error">{userDataErr.usernameErr}</p>}
+          <input
+            className="form__input"
+            type="text"
+            name="username"
+            value={userData.username}
+            onChange={handleChange}
+            placeholder="User Name"
+          />
+        </div>
+
+        <div className="form__row">
+          {userDataErr.passwordErr && <p className="error">{userDataErr.passwordErr}</p>}
+          <input
+            className="form__input"
+            type="password"
+            name="password"
+            value={userData.password}
+            onChange={handleChange}
+            placeholder="Password"
+          />
+        </div>
+
+        <div className="form__row">
+          {userDataErr.passwordConfirmErr && (<p className="error">{userDataErr.passwordConfirmErr}</p>)}
+          <input
+            className="form__input"
+            type="password"
+            name="passwordConfirm"
+            value={userData.passwordConfirm}
+            onChange={handleChange}
+            placeholder="Confirm Password"
+          />
+        </div>
       </div>
-      <button className="button" onClick={handleClick}>Register</button>
+      <button className="button" onClick={handleClick}>
+        Register
+      </button>
     </form>
-  )
-}
+  );
+};
