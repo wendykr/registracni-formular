@@ -31,15 +31,18 @@ export const Registration: React.FC = () => {
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
+    
     if (userData.username === '') {
       console.log('empty username');
       return;
-    } else {
-      console.log(userData);
-    }
-
-    if (userData.username === '') {
-      console.log('empty username');
+    } else if (userData.email === '') {
+      console.log('empty email');
+      return;
+    } else if (userData.password === '') {
+      console.log('empty password');
+      return;
+    } else if (userData.passwordConfirm === '') {
+      console.log('empty passwordConfirm');
       return;
     } else {
       console.log(userData);
