@@ -39,9 +39,9 @@ export const Registration: React.FC = () => {
 
     if (event.target.name === 'email' && userData.username === '' ) {
       const updatedUsername = event.target.value.substring(0, event.target.value.indexOf('@'));
-      setUserData({ ...userData, username: updatedUsername, [event.target.name]: event.target.value });
+      setUserData({ ...userData, username: updatedUsername, [event.target.name]: event.target.value.trim() });
     } else {
-      setUserData({ ...userData, [event.target.name]: event.target.value });
+      setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
     }
 
     setUserDataErr({ ...userDataErr, [`${event.target.name}Err`]: '' });
