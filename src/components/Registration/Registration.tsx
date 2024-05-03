@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './Registration.scss';
 import { FaUser } from 'react-icons/fa';
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 interface RegistrationStructure {
   username: string;
@@ -30,6 +32,8 @@ export const Registration: React.FC = () => {
     passwordErr: '',
     passwordConfirmErr: '',
   });
+
+  const [isShowPass, SetIsShowPass] = useState<boolean>(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const updatedUsername =
@@ -83,6 +87,8 @@ export const Registration: React.FC = () => {
 
     console.log('userData:', userData);
 
+    SetIsShowPass(false);
+
     setUserData({
       username: '',
       email: '',
@@ -97,6 +103,10 @@ export const Registration: React.FC = () => {
       passwordConfirmErr: '',
     });
   };
+
+  const handleShowPass = () => {
+    SetIsShowPass(prev => !prev);
+  }
 
   return (
     <form className="form">
@@ -134,12 +144,15 @@ export const Registration: React.FC = () => {
           {userDataErr.passwordErr && <p className="error">{userDataErr.passwordErr}</p>}
           <input
             className="form__input"
-            type="password"
+            type={`${isShowPass ? 'text' : 'password'}`}
             name="password"
             value={userData.password}
             onChange={handleChange}
             placeholder="Password"
           />
+          {
+            userData.password &&  (isShowPass ? <FaEyeSlash className="icon-eye" onClick={handleShowPass} /> : <FaEye className="icon-eye" onClick={handleShowPass} />)
+          }
         </div>
 
         <div className="form__row">
