@@ -36,10 +36,13 @@ export const Registration: React.FC = () => {
   const [isShowPass, SetIsShowPass] = useState<boolean>(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedUsername =
-    event.target.name === 'email' ? event.target.value.substring(0, event.target.value.indexOf('@')) : userData.username;
 
-    setUserData({ ...userData, username: updatedUsername, [event.target.name]: event.target.value });
+    if (event.target.name === 'email' && userData.username === '' ) {
+      const updatedUsername = event.target.value.substring(0, event.target.value.indexOf('@'));
+      setUserData({ ...userData, username: updatedUsername, [event.target.name]: event.target.value });
+    } else {
+      setUserData({ ...userData, [event.target.name]: event.target.value });
+    }
 
     setUserDataErr({ ...userDataErr, [`${event.target.name}Err`]: '' });
   };
@@ -151,7 +154,7 @@ export const Registration: React.FC = () => {
             placeholder="Password"
           />
           {
-            userData.password &&  (isShowPass ? <FaEyeSlash className="icon-eye" onClick={handleShowPass} /> : <FaEye className="icon-eye" onClick={handleShowPass} />)
+            userData.password &&  (isShowPass ? <FaEyeSlash className="icon-eye" onClick={handleShowPass} title="Hidden pass" /> : <FaEye className="icon-eye" onClick={handleShowPass} title="Show pass"/>)
           }
         </div>
 
