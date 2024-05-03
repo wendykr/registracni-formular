@@ -44,6 +44,12 @@ export const Registration: React.FC = () => {
     } else if (userData.passwordConfirm === '') {
       console.log('empty passwordConfirm');
       return;
+    } else if (userData.password !== userData.passwordConfirm) {
+      console.log('passwords do not match');
+      return;
+    } else if (!userData.email.includes('@')) {
+      console.log('invalid email format');
+      return;
     } else {
       console.log(userData);
     }
