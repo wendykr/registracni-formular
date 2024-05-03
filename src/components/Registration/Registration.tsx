@@ -65,6 +65,8 @@ export const Registration: React.FC = () => {
       newUserDataErr.emailErr = 'Email is required';
     } else if (!userData.email.includes('@')) {
       newUserDataErr.emailErr = 'Invalid email format';
+    } else if (userData.email.indexOf('@') === 0) {
+      newUserDataErr.emailErr = 'Email cannot start with "@"';
     }
 
     if (userData.password === '') {
