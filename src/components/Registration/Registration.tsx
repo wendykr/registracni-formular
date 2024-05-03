@@ -18,28 +18,34 @@ export const Registration: React.FC = () => {
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    setUserData({...userData, [event.target.name]: event.target.value})
-  }
+
+    const updatedUsername = event.target.name === 'email' ? event.target.value.substring(0, event.target.value.indexOf('@')) : userData.username;
+
+    if (updatedUsername.length > 0) {
+      setUserData({ ...userData, username: updatedUsername, [event.target.name]: event.target.value });
+    } else {
+      setUserData({ ...userData, [event.target.name]: event.target.value });
+      return;
+    }
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     if (userData.username === '') {
       console.log('empty username');
-      const atIndex = userData.email.indexOf("@");
-
-      if (atIndex !== -1) {
-        const username = userData.email.substring(0, atIndex);
-        const newUserData = { ...userData, username: username };
-        console.log(newUserData);
-      } else {
-        console.log("Znak '@' nebyl nalezen.");
-        return;
-      }
+      return;
     } else {
       console.log(userData);
     }
 
+    if (userData.username === '') {
+      console.log('empty username');
+      return;
+    } else {
+      console.log(userData);
+    }
+
+    console.log('set default userData');
     setUserData({
       username: '',
       email: '',
