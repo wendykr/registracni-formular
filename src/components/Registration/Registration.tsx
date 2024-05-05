@@ -36,6 +36,7 @@ export const Registration: React.FC = () => {
   });
 
   const [isShowPass, SetIsShowPass] = useState<boolean>(false);
+  const emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -65,10 +66,8 @@ export const Registration: React.FC = () => {
 
     if (userData.email === '') {
       newUserDataErr.emailErr = 'Email is required';
-    } else if (!userData.email.includes('@')) {
+    } else if (!emailRegex.test(userData.email)) {
       newUserDataErr.emailErr = 'Invalid email format';
-    } else if (userData.email.indexOf('@') === 0) {
-      newUserDataErr.emailErr = 'Email cannot start with "@"';
     }
 
     if (userData.password === '') {
