@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import './Registration.scss';
 import { FaUser } from 'react-icons/fa';
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
 import { toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button } from '../Button/Button';
+import { RegistrationRow } from '../RegistrationRow/RegistrationRow';
 
 interface RegistrationStructure {
   username: string;
@@ -136,56 +135,10 @@ export const Registration: React.FC = () => {
         </div>
       </div>
       <div className="form__body">
-        <div className="form__row">
-          {userDataErr.emailErr && <p className="error">{userDataErr.emailErr}</p>}
-          <input
-            className="form__input"
-            type="text"
-            name="email"
-            value={userData.email}
-            onChange={handleChange}
-            placeholder="Email Address"
-          />
-        </div>
-
-        <div className="form__row">
-          {userDataErr.usernameErr && <p className="error">{userDataErr.usernameErr}</p>}
-          <input
-            className="form__input"
-            type="text"
-            name="username"
-            value={userData.username}
-            onChange={handleChange}
-            placeholder="User Name"
-          />
-        </div>
-
-        <div className="form__row">
-          {userDataErr.passwordErr && <p className="error">{userDataErr.passwordErr}</p>}
-          <input
-            className="form__input"
-            type={`${isShowPass ? 'text' : 'password'}`}
-            name="password"
-            value={userData.password}
-            onChange={handleChange}
-            placeholder="Password"
-          />
-          {
-            userData.password &&  (isShowPass ? <FaEyeSlash className="icon-eye" onClick={handleShowPass} title="Hidden pass" /> : <FaEye className="icon-eye" onClick={handleShowPass} title="Show pass"/>)
-          }
-        </div>
-
-        <div className="form__row">
-          {userDataErr.passwordConfirmErr && (<p className="error">{userDataErr.passwordConfirmErr}</p>)}
-          <input
-            className="form__input"
-            type="password"
-            name="passwordConfirm"
-            value={userData.passwordConfirm}
-            onChange={handleChange}
-            placeholder="Confirm Password"
-          />
-        </div>
+        <RegistrationRow errMsg={userDataErr.emailErr} type="text" name="email" value={userData.email} onChange={handleChange} placeholder="Email Address" />
+        <RegistrationRow errMsg={userDataErr.usernameErr} type="text" name="username" value={userData.username} onChange={handleChange} placeholder="User Name" />
+        <RegistrationRow errMsg={userDataErr.passwordErr} type={`${isShowPass ? 'text' : 'password'}`} name="password" value={userData.password} onChange={handleChange} placeholder="Password" isShowPass={isShowPass} handleShowPass={handleShowPass} />
+        <RegistrationRow errMsg={userDataErr.passwordConfirmErr} type="password" name="passwordConfirm" value={userData.passwordConfirm} onChange={handleChange} placeholder="Confirm Password" />
       </div>
       <Button handleClick={handleClick} />
     </form>
