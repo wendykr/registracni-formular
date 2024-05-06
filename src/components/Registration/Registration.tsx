@@ -40,14 +40,11 @@ export const Registration: React.FC = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
-    if (event.target.name === 'email' && userData.username === '') {
+    if (event.target.name === 'email' && userData.username === '' ) {
       const updatedUsername = event.target.value.substring(0, event.target.value.indexOf('@'));
       setUserData({ ...userData, username: updatedUsername, [event.target.name]: event.target.value.trim() });
       setUserDataErr({ ...userDataErr, emailErr: '' });
       updatedUsername && setUserDataErr({ ...userDataErr, usernameErr: '' });
-    } else if (event.target.name === 'email' && userData.username !== '') {
-      setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
-      setUserDataErr({ ...userDataErr, [`${event.target.name}Err`]: '' });
     } else {
       setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
       setUserDataErr({ ...userDataErr, [`${event.target.name}Err`]: '' });
