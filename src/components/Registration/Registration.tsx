@@ -5,6 +5,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { toast, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Button } from '../Button/Button';
 
 interface RegistrationStructure {
   username: string;
@@ -185,9 +186,7 @@ export const Registration: React.FC = () => {
           />
         </div>
       </div>
-      <button className="button" onClick={handleClick}>
-        Register
-      </button>
+      <Button handleClick={handleClick} />
     </form>
   );
 };
