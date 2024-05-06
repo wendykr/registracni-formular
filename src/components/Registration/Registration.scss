@@ -40,54 +40,9 @@
     flex-direction: column;
     gap: 20px;
   }
-
-  &__row {
-    width: 100%;
-    position: relative;
-  }
-
-  &__input {
-    padding: 0 20px;
-    width: 100%;
-    background-color: #516275;
-    color: #ffffff;
-    font-size: 20px;
-    border: none;
-    height: 54px;
-    border-radius: 12px;
-
-    &:focus {
-      outline: none;
-      background-color: #435161;
-      &::placeholder {
-        color: #435161;
-      }
-    }
-
-    &::placeholder {
-      color: #ffffff;
-    }
-  }
 }
 
 .icon-user {
   font-size: 60px;
   color: #344559;
-}
-
-.error {
-  margin: 0 0 4px 0;
-  padding-left: 20px;
-  font-size: 14px;
-  color: #ee0000;
-}
-
-.icon-eye {
-  padding: 10px;
-  font-size: 42px;
-  color: #ffffff;
-  position: absolute;
-  top: 6px;
-  right: 0;
-  cursor: pointer;
 }
