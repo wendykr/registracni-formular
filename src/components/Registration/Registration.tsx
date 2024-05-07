@@ -44,7 +44,7 @@ export const Registration: React.FC = () => {
       const updatedUsername = event.target.value.substring(0, event.target.value.indexOf('@'));
       setUserData({ ...userData, username: updatedUsername, [event.target.name]: event.target.value.trim() });
       setUserDataErr({ ...userDataErr, emailErr: '' });
-      updatedUsername && setUserDataErr({ ...userDataErr, usernameErr: '' });
+      updatedUsername && setUserDataErr({ ...userDataErr, usernameErr: '', emailErr: '' });
     } else {
       setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
       setUserDataErr({ ...userDataErr, [`${event.target.name}Err`]: '' });
