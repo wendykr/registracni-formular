@@ -126,7 +126,7 @@ export const Registration: React.FC = () => {
         </div>
       </div>
       <div className="form__body">
-        <RegistrationRow isValid={isValidEmail} errMsg={`${!emailRegex.test(userData.email) ? 'Invalid email format' : 'Email is required'}`} type="text" name="email" value={userData.email} onChange={handleChange} placeholder="Email Address" />
+        <RegistrationRow isValid={isValidEmail} errMsg={`${(!emailRegex.test(userData.email) && userData.email !== '') ? 'Invalid email format' : 'Email is required'}`} type="text" name="email" value={userData.email} onChange={handleChange} placeholder="Email Address" />
         <RegistrationRow isValid={isValidUsername} errMsg="Username is required" type="text" name="username" value={userData.username} onChange={handleChange} placeholder="User Name" />
         <RegistrationRow isValid={isValidPassword} errMsg="Password is required" type={`${isShowPass ? 'text' : 'password'}`} name="password" value={userData.password} onChange={handleChange} placeholder="Password" isShowPass={isShowPass} handleShowPass={handleShowPass} />
         <RegistrationRow isValid={isValidPasswordConfirm} errMsg={`${(userData.password !== userData.passwordConfirm) ? 'Passwords don´t match' : 'Please confirm your password'}`} type="password" name="passwordConfirm" value={userData.passwordConfirm} onChange={handleChange} placeholder="Confirm Password" />
