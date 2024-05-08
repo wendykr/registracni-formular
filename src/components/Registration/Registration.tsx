@@ -22,22 +22,22 @@ export const Registration: React.FC = () => {
   });
 
   const [isShowPass, setIsShowPass] = useState<boolean>(false);
-  const [isValidEmail, setIsValidEmail] = useState<boolean>(false);
-  const [isValidUsername, setIsValidUsername] = useState<boolean>(false);
-  const [isValidPassword, setIsValidPassword] = useState<boolean>(false);
-  const [isValidPasswordConfirm, setIsValidPasswordConfirm] = useState<boolean>(false);
+  const [isInvalidEmail, setIsInvalidEmail] = useState<boolean>(false);
+  const [isInvalidUsername, setIsInvalidUsername] = useState<boolean>(false);
+  const [isInvalidPassword, setIsInvalidPassword] = useState<boolean>(false);
+  const [isInvalidPasswordConfirm, setIsInvalidPasswordConfirm] = useState<boolean>(false);
 
   const emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
     if (event.target.name === 'email') {
-      (!emailRegex.test(event.target.value.trim())) ? setIsValidEmail(true) : setIsValidEmail(false)
+      (!emailRegex.test(event.target.value.trim())) ? setIsInvalidEmail(true) : setIsInvalidEmail(false)
 
       if (!userData.username) {
         const updatedUsername = event.target.value.substring(0, event.target.value.indexOf('@'));
         setUserData({ ...userData, username: updatedUsername, [event.target.name]: event.target.value.trim() });
-        setIsValidEmail(true);
+        setIsInvalidEmail(true);
       } else {
         setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
       }
@@ -45,19 +45,19 @@ export const Registration: React.FC = () => {
 
     if (event.target.name === 'username') {
       setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
-      (event.target.value.trim()) ? setIsValidUsername(false) : setIsValidUsername(true);
+      (event.target.value.trim()) ? setIsInvalidUsername(false) : setIsInvalidUsername(true);
     }
 
     if (event.target.name === 'password') {
       setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
-      (event.target.value.trim()) ? setIsValidPassword(false) : setIsValidPassword(true);
+      (event.target.value.trim()) ? setIsInvalidPassword(false) : setIsInvalidPassword(true);
     }
     
     if (event.target.name === 'passwordConfirm') {
       if (userData.password !== event.target.value.trim() || event.target.value.trim() === '') {
-        setIsValidPasswordConfirm(true);
+        setIsInvalidPasswordConfirm(true);
       } else {
-        setIsValidPasswordConfirm(false);
+        setIsInvalidPasswordConfirm(false);
       }
       setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
     }
@@ -67,23 +67,23 @@ export const Registration: React.FC = () => {
     event.preventDefault();
 
     if (userData.username === '') {
-      setIsValidUsername(true);
+      setIsInvalidUsername(true);
     }
 
     if (userData.email === '') {
-      setIsValidEmail(true);
+      setIsInvalidEmail(true);
     } else if (!emailRegex.test(userData.email)) {
-      setIsValidEmail(true);
+      setIsInvalidEmail(true);
     }
 
     if (userData.password === '') {
-      setIsValidPassword(true);
+      setIsInvalidPassword(true);
     }
 
     if (userData.passwordConfirm === '') {
-      setIsValidPasswordConfirm(true);
+      setIsInvalidPasswordConfirm(true);
     } else if (userData.password !== userData.passwordConfirm) {
-      setIsValidPasswordConfirm(true);
+      setIsInvalidPasswordConfirm(true);
     }
 
     if (userData.username === '' || userData.email === '' || !emailRegex.test(userData.email) || userData.password === '' || userData.passwordConfirm === ''|| (userData.password !== userData.passwordConfirm)) {
@@ -126,12 +126,48 @@ export const Registration: React.FC = () => {
         </div>
       </div>
       <div className="form__body">
-        <RegistrationRow isValid={isValidEmail} errMsg={`${(!emailRegex.test(userData.email) && userData.email !== '') ? 'Invalid email format' : 'Email is required'}`} type="text" name="email" value={userData.email} onChange={handleChange} placeholder="Email Address" />
-        <RegistrationRow isValid={isValidUsername} errMsg="Username is required" type="text" name="username" value={userData.username} onChange={handleChange} placeholder="User Name" />
-        <RegistrationRow isValid={isValidPassword} errMsg="Password is required" type={`${isShowPass ? 'text' : 'password'}`} name="password" value={userData.password} onChange={handleChange} placeholder="Password" isShowPass={isShowPass} handleShowPass={handleShowPass} />
-        <RegistrationRow isValid={isValidPasswordConfirm} errMsg={`${(userData.password !== userData.passwordConfirm) ? 'Passwords don´t match' : 'Please confirm your password'}`} type="password" name="passwordConfirm" value={userData.passwordConfirm} onChange={handleChange} placeholder="Confirm Password" />
+        <RegistrationRow
+          isValid={isInvalidEmail}
+          errMsg={`${(!emailRegex.test(userData.email) && userData.email !== '') ? 'Invalid email format' : 'Email is required'}`}
+          type="text"
+          name="email"
+          value={userData.email}
+          onChange={handleChange}
+          placeholder="Email Address"
+        />
+        <RegistrationRow
+          isValid={isInvalidUsername}
+          errMsg="Username is required"
+          type="text"
+          name="username"
+          value={userData.username}
+          onChange={handleChange}
+          placeholder="User Name"
+        />
+        <RegistrationRow
+          isValid={isInvalidPassword}
+          errMsg="Password is required"
+          type={`${isShowPass ? 'text' : 'password'}`}
+          name="password"
+          value={userData.password}
+          onChange={handleChange}
+          placeholder="Password"
+          isShowPass={isShowPass}
+          handleShowPass={handleShowPass}
+        />
+        <RegistrationRow
+          isValid={isInvalidPasswordConfirm}
+          errMsg={`${(userData.password !== userData.passwordConfirm) ? 'Passwords don´t match' : 'Please confirm your password'}`}
+          type="password"
+          name="passwordConfirm"
+          value={userData.passwordConfirm}
+          onChange={handleChange}
+          placeholder="Confirm Password"
+        />
       </div>
-      <Button handleClick={handleClick} />
+      <Button
+        handleClick={handleClick}
+      />
     </form>
   );
 };
