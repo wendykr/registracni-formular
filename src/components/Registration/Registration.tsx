@@ -53,7 +53,7 @@ export const Registration: React.FC = () => {
       setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
       (event.target.value.trim()) ? setIsInvalidPassword(false) : setIsInvalidPassword(true);
     }
-    
+
     if (event.target.name === 'passwordConfirm') {
       if (userData.password !== event.target.value.trim() || event.target.value.trim() === '') {
         setIsInvalidPasswordConfirm(true);
@@ -127,6 +127,7 @@ export const Registration: React.FC = () => {
         </div>
       </div>
       <div className="form__body">
+
         <RegistrationRow
           isValid={isInvalidEmail}
           errMsg={`${(!emailRegex.test(userData.email) && userData.email !== '') ? 'Invalid email format' : 'Email is required'}`}
@@ -136,6 +137,7 @@ export const Registration: React.FC = () => {
           onChange={handleChange}
           placeholder="Email Address"
         />
+
         <RegistrationRow
           isValid={isInvalidUsername}
           errMsg="Username is required"
@@ -145,6 +147,7 @@ export const Registration: React.FC = () => {
           onChange={handleChange}
           placeholder="User Name"
         />
+
         <RegistrationRow
           isValid={isInvalidPassword}
           errMsg="Password is required"
@@ -156,6 +159,7 @@ export const Registration: React.FC = () => {
           isShowPass={isShowPass}
           handleShowPass={handleShowPass}
         />
+
         <RegistrationRow
           isValid={isInvalidPasswordConfirm}
           errMsg={`${(userData.password !== userData.passwordConfirm) ? 'Passwords don´t match' : 'Please confirm your password'}`}
@@ -165,6 +169,7 @@ export const Registration: React.FC = () => {
           onChange={handleChange}
           placeholder="Confirm Password"
         />
+
       </div>
       <Button
         handleClick={handleClick}

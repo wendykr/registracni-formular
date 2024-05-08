@@ -4,7 +4,7 @@ import { PassToggle } from '../PassToggle/PassToggle';
 
 interface RegistrationRowProps extends InputProps {
   isValid: boolean;
-  errMsg: string,
+  errMsg: string;
   isShowPass?: boolean;
   handleShowPass?: () => void;
 }
