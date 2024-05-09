@@ -41,6 +41,7 @@ export const Registration: React.FC = () => {
         updatedUsername && setIsInvalidUsername(false);
       } else {
         setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
+
       }
     }
 
@@ -66,30 +67,6 @@ export const Registration: React.FC = () => {
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-
-    if (userData.username === '') {
-      setIsInvalidUsername(true);
-    }
-
-    if (userData.email === '') {
-      setIsInvalidEmail(true);
-    } else if (!emailRegex.test(userData.email)) {
-      setIsInvalidEmail(true);
-    }
-
-    if (userData.password === '') {
-      setIsInvalidPassword(true);
-    }
-
-    if (userData.passwordConfirm === '') {
-      setIsInvalidPasswordConfirm(true);
-    } else if (userData.password !== userData.passwordConfirm) {
-      setIsInvalidPasswordConfirm(true);
-    }
-
-    if (userData.username === '' || userData.email === '' || !emailRegex.test(userData.email) || userData.password === '' || userData.passwordConfirm === ''|| (userData.password !== userData.passwordConfirm)) {
-      return;
-    }
 
     console.log('userData:', userData);
 
@@ -173,6 +150,10 @@ export const Registration: React.FC = () => {
       </div>
       <Button
         handleClick={handleClick}
+        isInvalidEmail={isInvalidEmail}
+        isInvalidUsername={isInvalidUsername}
+        isInvalidPassword={isInvalidPassword}
+        isInvalidPasswordConfirm={isInvalidPasswordConfirm}
       />
     </form>
   );

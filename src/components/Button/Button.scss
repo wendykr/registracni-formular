@@ -8,6 +8,16 @@
   text-transform: uppercase;
   cursor: pointer;
 
+  &:disabled {
+    background-color: #d4d4d4;
+    color: #4a5568;
+    cursor: initial;
+
+    &:hover {
+      background-color: #d4d4d4;
+    }
+  }
+
   &:hover {
     background-color: #435161;
   }
