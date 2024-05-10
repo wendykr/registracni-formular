@@ -47,38 +47,47 @@ export const Registration: React.FC = () => {
 
   const emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    (!emailRegex.test(event.target.value.trim()))
+      ?
+        setIsInvalidEmail(true)
+      :
+        setIsInvalidEmail(false)
 
-    if (event.target.name === 'email') {
-      (!emailRegex.test(event.target.value.trim())) ? setIsInvalidEmail(true) : setIsInvalidEmail(false)
-
-      if (!userData.username) {
-        const updatedUsername = event.target.value.substring(0, event.target.value.indexOf('@'));
-        setUserData({ ...userData, username: updatedUsername, [event.target.name]: event.target.value.trim() });
-        updatedUsername && setIsInvalidUsername(false);
-      } else {
-        setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
-      }
+    if (!userData.username) {
+      const updatedUsername = event.target.value.substring(0, event.target.value.indexOf('@'));
+      setUserData({ ...userData, username: updatedUsername, email: event.target.value.trim() });
+      updatedUsername && setIsInvalidUsername(false);
+    } else {
+      setUserData({ ...userData, email: event.target.value.trim() });
     }
+  };
 
-    if (event.target.name === 'username') {
-      setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
-      (event.target.value.trim()) ? setIsInvalidUsername(false) : setIsInvalidUsername(true);
-    }
+  const handleChangeUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserData({ ...userData, username: event.target.value.trim() });
+    (event.target.value.trim())
+      ?
+        setIsInvalidUsername(false)
+      : 
+        setIsInvalidUsername(true);
+  };
 
-    if (event.target.name === 'password') {
-      setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
-      (event.target.value.trim()) ? setIsInvalidPassword(false) : setIsInvalidPassword(true);
-    }
+  const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserData({ ...userData, password: event.target.value.trim() });
+    (event.target.value.trim())
+      ?
+        setIsInvalidPassword(false)
+      :
+        setIsInvalidPassword(true);
+  };
 
-    if (event.target.name === 'passwordConfirm') {
-      if (userData.password !== event.target.value.trim() || event.target.value.trim() === '') {
-        setIsInvalidPasswordConfirm(true);
-      } else {
+  const handleChangePasswordConfirm = (event: React.ChangeEvent<HTMLInputElement>) => {
+    (userData.password !== event.target.value.trim() || event.target.value.trim() === '')
+      ?
+        setIsInvalidPasswordConfirm(true)
+      :
         setIsInvalidPasswordConfirm(false);
-      }
-      setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
-    }
+    setUserData({ ...userData, passwordConfirm: event.target.value.trim() });
   };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -128,7 +137,7 @@ export const Registration: React.FC = () => {
           type="text"
           name="email"
           value={userData.email}
-          onChange={handleChange}
+          onChange={handleChangeEmail}
           placeholder="Email Address"
         />
 
@@ -138,7 +147,7 @@ export const Registration: React.FC = () => {
           type="text"
           name="username"
           value={userData.username}
-          onChange={handleChange}
+          onChange={handleChangeUsername}
           placeholder="User Name"
         />
 
@@ -148,7 +157,7 @@ export const Registration: React.FC = () => {
           type={`${isShowPass ? 'text' : 'password'}`}
           name="password"
           value={userData.password}
-          onChange={handleChange}
+          onChange={handleChangePassword}
           placeholder="Password"
           isShowPass={isShowPass}
           handleShowPass={handleShowPass}
@@ -160,7 +169,7 @@ export const Registration: React.FC = () => {
           type="password"
           name="passwordConfirm"
           value={userData.passwordConfirm}
-          onChange={handleChange}
+          onChange={handleChangePasswordConfirm}
           placeholder="Confirm Password"
         />
 
