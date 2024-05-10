@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Registration.scss';
 import { FaUser } from 'react-icons/fa';
 import { toast, Slide } from 'react-toastify';
@@ -22,10 +22,28 @@ export const Registration: React.FC = () => {
   });
 
   const [isShowPass, setIsShowPass] = useState<boolean>(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
   const [isInvalidEmail, setIsInvalidEmail] = useState<boolean>(false);
   const [isInvalidUsername, setIsInvalidUsername] = useState<boolean>(false);
   const [isInvalidPassword, setIsInvalidPassword] = useState<boolean>(false);
   const [isInvalidPasswordConfirm, setIsInvalidPasswordConfirm] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (userData.email === '' ||
+        userData.username === '' ||
+        userData.password === '' ||
+        userData.passwordConfirm === '' ||
+        isInvalidEmail ||
+        isInvalidUsername ||
+        isInvalidPassword ||
+        isInvalidPasswordConfirm
+      ) {
+      setIsButtonDisabled(true);
+    } else {
+      setIsButtonDisabled(false);
+    }
+
+  }, [userData, isInvalidEmail, isInvalidUsername, isInvalidPassword, isInvalidPasswordConfirm])
 
   const emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
 
@@ -37,11 +55,9 @@ export const Registration: React.FC = () => {
       if (!userData.username) {
         const updatedUsername = event.target.value.substring(0, event.target.value.indexOf('@'));
         setUserData({ ...userData, username: updatedUsername, [event.target.name]: event.target.value.trim() });
-        setIsInvalidEmail(true);
         updatedUsername && setIsInvalidUsername(false);
       } else {
         setUserData({ ...userData, [event.target.name]: event.target.value.trim() });
-
       }
     }
 
@@ -83,6 +99,7 @@ export const Registration: React.FC = () => {
     });
 
     setIsShowPass(false);
+    setIsButtonDisabled(true);
 
     setUserData({
       username: '',
@@ -150,10 +167,7 @@ export const Registration: React.FC = () => {
       </div>
       <Button
         handleClick={handleClick}
-        isInvalidEmail={isInvalidEmail}
-        isInvalidUsername={isInvalidUsername}
-        isInvalidPassword={isInvalidPassword}
-        isInvalidPasswordConfirm={isInvalidPasswordConfirm}
+        isButtonDisabled={isButtonDisabled}
       />
     </form>
   );
